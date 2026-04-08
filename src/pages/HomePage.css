@@ -1,0 +1,140 @@
+.home-page {
+  min-height: 100vh;
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  background: linear-gradient(135deg, #8B0000 0%, #B71C1C 45%, #D84315 100%);
+  padding: 100px 24px 80px;
+  text-align: center;
+  color: white;
+  overflow: hidden;
+}
+
+/* Decorative pattern overlay */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.hero-eyebrow {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 5px 20px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+
+.hero-title {
+  font-size: 3.4rem;
+  font-weight: 800;
+  line-height: 1.15;
+  margin: 0 0 20px;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
+}
+
+.hero-accent {
+  color: #FFD54F;
+}
+
+.hero-subtitle {
+  font-size: 1.08rem;
+  line-height: 1.75;
+  opacity: 0.9;
+  margin: 0 0 44px;
+  max-width: 580px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 36px;
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.stat-number {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #FFD54F;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.stat-sep {
+  width: 1px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Destinations section */
+.destinations-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 64px 24px 80px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 44px;
+}
+
+.section-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 8px;
+}
+
+.section-header p {
+  color: #888;
+  font-size: 1rem;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 28px;
+}
+
+@media (max-width: 700px) {
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  .hero-stats {
+    gap: 20px;
+  }
+  .stat-number {
+    font-size: 1.6rem;
+  }
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+}

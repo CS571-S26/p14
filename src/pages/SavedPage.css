@@ -1,0 +1,98 @@
+.saved-page {
+  min-height: 100vh;
+  background: #FFF9F5;
+}
+
+.saved-hero {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+  color: white;
+  padding: 72px 24px 60px;
+  text-align: center;
+}
+
+.saved-hero-icon {
+  font-size: 2.6rem;
+  margin-bottom: 14px;
+}
+
+.saved-hero h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin: 0 0 10px;
+}
+
+.saved-hero p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.saved-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 52px 24px 80px;
+}
+
+.saved-count-row {
+  margin-bottom: 24px;
+}
+
+.saved-count {
+  font-size: 0.9rem;
+  color: #888;
+  font-weight: 500;
+}
+
+.saved-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 28px;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 80px 24px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.empty-illustration {
+  font-size: 5rem;
+  margin-bottom: 20px;
+  line-height: 1;
+}
+
+.empty-state h2 {
+  font-size: 1.7rem;
+  color: #1a1a2e;
+  margin: 0 0 14px;
+}
+
+.empty-state p {
+  color: #777;
+  line-height: 1.7;
+  font-size: 1rem;
+  margin: 0 0 30px;
+}
+
+.browse-btn {
+  background: #B71C1C;
+  color: white;
+  padding: 14px 36px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.browse-btn:hover {
+  background: #8B0000;
+}
+
+@media (max-width: 700px) {
+  .saved-hero h1 { font-size: 1.8rem; }
+  .saved-grid { grid-template-columns: 1fr; }
+}
