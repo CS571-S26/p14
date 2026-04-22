@@ -13,7 +13,10 @@ function NavBar() {
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
           <span className="logo-icon">🏮</span>
-          <span className="logo-text">Discover China</span>
+          <div className="logo-text-group">
+            <span className="logo-text">Discover China</span>
+            <span className="logo-tagline">Your China travel inspiration guide</span>
+          </div>
         </Link>
         <div className="navbar-links">
           <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>
