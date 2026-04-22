@@ -1,3 +1,8 @@
+// Image convention: drop your photos into public/images/<folder-name>/
+// and name them 1.jpg, 2.jpg, 3.jpg, 4.jpg (add more as needed).
+// process.env.PUBLIC_URL resolves to "" in dev and "/p14" on GitHub Pages automatically.
+const img = (folder, n) => `${process.env.PUBLIC_URL}/images/${folder}/${n}.jpg`;
+
 const locations = [
   {
     id: 1,
@@ -16,11 +21,12 @@ const locations = [
       "Best sections: Mutianyu, Badaling, Jinshanling",
     ],
     baseLikes: 2847,
+    // → place images in: public/images/great-wall/1.jpg … 4.jpg
     images: [
-      "https://picsum.photos/seed/gwall1/1200/700",
-      "https://picsum.photos/seed/gwall2/1200/700",
-      "https://picsum.photos/seed/gwall3/1200/700",
-      "https://picsum.photos/seed/gwall4/1200/700",
+      img("great-wall", 1),
+      img("great-wall", 2),
+      img("great-wall", 3),
+      img("great-wall", 4),
     ],
   },
   {
@@ -40,11 +46,12 @@ const locations = [
       "Home to 1.8 million priceless artifacts",
     ],
     baseLikes: 3241,
+    // → place images in: public/images/forbidden-city/1.jpg … 4.jpg
     images: [
-      "https://picsum.photos/seed/forbid1/1200/700",
-      "https://picsum.photos/seed/forbid2/1200/700",
-      "https://picsum.photos/seed/forbid3/1200/700",
-      "https://picsum.photos/seed/forbid4/1200/700",
+      img("forbidden-city", 1),
+      img("forbidden-city", 2),
+      img("forbidden-city", 3),
+      img("forbidden-city", 4),
     ],
   },
   {
@@ -64,11 +71,12 @@ const locations = [
       "Over 3,000 towering sandstone pillars",
     ],
     baseLikes: 4123,
+    // → place images in: public/images/zhangjiajie/1.jpg … 4.jpg
     images: [
-      "https://picsum.photos/seed/zjj1/1200/700",
-      "https://picsum.photos/seed/zjj2/1200/700",
-      "https://picsum.photos/seed/zjj3/1200/700",
-      "https://picsum.photos/seed/zjj4/1200/700",
+      img("zhangjiajie", 1),
+      img("zhangjiajie", 2),
+      img("zhangjiajie", 3),
+      img("zhangjiajie", 4),
     ],
   },
   {
@@ -88,11 +96,12 @@ const locations = [
       "Historic Su and Bai Causeways",
     ],
     baseLikes: 1987,
+    // → place images in: public/images/west-lake/1.jpg … 4.jpg
     images: [
-      "https://picsum.photos/seed/wlake1/1200/700",
-      "https://picsum.photos/seed/wlake2/1200/700",
-      "https://picsum.photos/seed/wlake3/1200/700",
-      "https://picsum.photos/seed/wlake4/1200/700",
+      img("west-lake", 1),
+      img("west-lake", 2),
+      img("west-lake", 3),
+      img("west-lake", 4),
     ],
   },
   {
@@ -112,11 +121,12 @@ const locations = [
       "Ancient karst limestone formations",
     ],
     baseLikes: 3567,
+    // → place images in: public/images/li-river/1.jpg … 4.jpg
     images: [
-      "https://picsum.photos/seed/lirvr1/1200/700",
-      "https://picsum.photos/seed/lirvr2/1200/700",
-      "https://picsum.photos/seed/lirvr3/1200/700",
-      "https://picsum.photos/seed/lirvr4/1200/700",
+      img("li-river", 1),
+      img("li-river", 2),
+      img("li-river", 3),
+      img("li-river", 4),
     ],
   },
   {
@@ -136,11 +146,12 @@ const locations = [
       "Ancient pine trees over 1,000 years old",
     ],
     baseLikes: 2654,
+    // → place images in: public/images/yellow-mountain/1.jpg … 4.jpg
     images: [
-      "https://picsum.photos/seed/hshan1/1200/700",
-      "https://picsum.photos/seed/hshan2/1200/700",
-      "https://picsum.photos/seed/hshan3/1200/700",
-      "https://picsum.photos/seed/hshan4/1200/700",
+      img("yellow-mountain", 1),
+      img("yellow-mountain", 2),
+      img("yellow-mountain", 3),
+      img("yellow-mountain", 4),
     ],
   },
   {
@@ -160,11 +171,12 @@ const locations = [
       "Spectacular autumn foliage display",
     ],
     baseLikes: 4891,
+    // → place images in: public/images/jiuzhaigou/1.jpg … 4.jpg
     images: [
-      "https://picsum.photos/seed/jzgou1/1200/700",
-      "https://picsum.photos/seed/jzgou2/1200/700",
-      "https://picsum.photos/seed/jzgou3/1200/700",
-      "https://picsum.photos/seed/jzgou4/1200/700",
+      img("jiuzhaigou", 1),
+      img("jiuzhaigou", 2),
+      img("jiuzhaigou", 3),
+      img("jiuzhaigou", 4),
     ],
   },
   {
@@ -184,11 +196,12 @@ const locations = [
       "Heart of modern Shanghai's history",
     ],
     baseLikes: 3102,
+    // → place images in: public/images/the-bund/1.jpg … 4.jpg
     images: [
-      "https://picsum.photos/seed/bund1/1200/700",
-      "https://picsum.photos/seed/bund2/1200/700",
-      "https://picsum.photos/seed/bund3/1200/700",
-      "https://picsum.photos/seed/bund4/1200/700",
+      img("the-bund", 1),
+      img("the-bund", 2),
+      img("the-bund", 3),
+      img("the-bund", 4),
     ],
   },
   {
@@ -208,11 +221,12 @@ const locations = [
       "Former winter palace of the Dalai Lamas",
     ],
     baseLikes: 3789,
+    // → place images in: public/images/potala-palace/1.jpg … 4.jpg
     images: [
-      "https://picsum.photos/seed/potal1/1200/700",
-      "https://picsum.photos/seed/potal2/1200/700",
-      "https://picsum.photos/seed/potal3/1200/700",
-      "https://picsum.photos/seed/potal4/1200/700",
+      img("potala-palace", 1),
+      img("potala-palace", 2),
+      img("potala-palace", 3),
+      img("potala-palace", 4),
     ],
   },
 ];
