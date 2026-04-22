@@ -1,7 +1,9 @@
 import React from 'react';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import LocationCard from '../components/LocationCard';
+import PageHero from '../components/PageHero';
 import locations from '../data/locations';
 import './SavedPage.css';
 
@@ -12,39 +14,43 @@ function SavedPage() {
 
   return (
     <div className="saved-page">
-      <div className="saved-hero">
-        <div className="saved-hero-icon">🔖</div>
-        <h1>Your Saved Places</h1>
-        <p>Your personal China travel wishlist — ready whenever you are</p>
-      </div>
+      <PageHero
+        icon="🔖"
+        title="Your Saved Places"
+        subtitle="Your personal China travel wishlist — ready whenever you are"
+      />
 
       <div className="saved-content">
-        {savedLocations.length === 0 ? (
-          <div className="empty-state">
-            <div className="empty-illustration">🏯</div>
-            <h2>No saved places yet</h2>
-            <p>
-              Browse our destinations and click <strong>Save</strong> on any place that inspires you.
-              They'll all appear here for easy reference.
-            </p>
-            <button className="browse-btn" onClick={() => navigate('/')}>
-              Explore Destinations
-            </button>
-          </div>
-        ) : (
-          <>
-            <div className="saved-count-row">
-              <span className="saved-count">
-                {savedLocations.length} destination{savedLocations.length !== 1 ? 's' : ''} saved
-              </span>
+        <Container>
+          {savedLocations.length === 0 ? (
+            <div className="empty-state">
+              <div className="empty-illustration">🏯</div>
+              <h2>No saved places yet</h2>
+              <p>
+                Browse our destinations and click <strong>Save</strong> on any place that inspires you.
+                They'll all appear here for easy reference.
+              </p>
+              <Button variant="danger" onClick={() => navigate('/')}>
+                Explore Destinations
+              </Button>
             </div>
-            <div className="saved-grid">
-              {savedLocations.map(location => (
-                <LocationCard key={location.id} location={location} />
-              ))}
-            </div>
-          </>
-        )}
+          ) : (
+            <>
+              <div className="saved-count-row">
+                <span className="saved-count">
+                  {savedLocations.length} destination{savedLocations.length !== 1 ? 's' : ''} saved
+                </span>
+              </div>
+              <Row xs={1} sm={2} lg={4} className="g-4">
+                {savedLocations.map(location => (
+                  <Col key={location.id}>
+                    <LocationCard location={location} />
+                  </Col>
+                ))}
+              </Row>
+            </>
+          )}
+        </Container>
       </div>
     </div>
   );

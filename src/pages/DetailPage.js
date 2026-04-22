@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Container, Button, Badge } from 'react-bootstrap';
 import ImageCarousel from '../components/ImageCarousel';
 import { useApp } from '../context/AppContext';
 import locations from '../data/locations';
@@ -27,10 +28,10 @@ function DetailPage() {
 
   if (!location) {
     return (
-      <div className="not-found">
+      <Container className="not-found text-center py-5">
         <h2>Location not found</h2>
-        <button className="home-link-btn" onClick={() => navigate('/')}>Return to Home</button>
-      </div>
+        <Button variant="danger" onClick={() => navigate('/')}>Return to Home</Button>
+      </Container>
     );
   }
 
@@ -74,7 +75,7 @@ function DetailPage() {
             <span className="detail-chinese">{location.chineseName}</span>
           </div>
           <div className="detail-meta">
-            <span className="detail-category-tag">{location.category}</span>
+            <Badge bg="danger" className="detail-category-tag">{location.category}</Badge>
             <span className="detail-province">📍 {location.province}</span>
           </div>
         </div>
@@ -109,49 +110,53 @@ function DetailPage() {
             </div>
 
             <div className="sidebar-actions">
-              <button
-                className={`sidebar-btn like-btn ${isLiked ? 'active' : ''}`}
+              <Button
+                variant={isLiked ? 'danger' : 'outline-danger'}
+                className="sidebar-btn like-btn w-100"
                 onClick={() => toggleLike(location.id)}
               >
                 <span className="btn-emoji">{isLiked ? '❤️' : '🤍'}</span>
                 <span className="btn-label">{isLiked ? 'Liked' : 'Like'}</span>
                 <span className="like-pill">{likeCount.toLocaleString()}</span>
-              </button>
+              </Button>
 
-              <button
-                className={`sidebar-btn save-btn ${isSaved ? 'active' : ''}`}
+              <Button
+                variant={isSaved ? 'warning' : 'outline-warning'}
+                className="sidebar-btn save-btn w-100"
                 onClick={() => toggleSave(location.id)}
               >
                 <span className="btn-emoji">{isSaved ? '🔖' : '📌'}</span>
                 <span className="btn-label">{isSaved ? 'Saved to List' : 'Save for Later'}</span>
-              </button>
+              </Button>
             </div>
           </aside>
         </div>
 
         {/* Navigation */}
         <nav className="place-navigation">
-          <button
+          <Button
+            variant="outline-secondary"
             className="place-nav-btn prev-place"
             onClick={() => prevLocation && navigate(`/location/${prevLocation.id}`)}
             disabled={!prevLocation}
           >
             <span className="nav-arrow">←</span>
             <span className="nav-place-name">{prevLocation ? prevLocation.name : 'No previous'}</span>
-          </button>
+          </Button>
 
-          <button className="place-nav-btn home-place" onClick={() => navigate('/')}>
+          <Button variant="danger" className="place-nav-btn home-place" onClick={() => navigate('/')}>
             🏠 Home
-          </button>
+          </Button>
 
-          <button
+          <Button
+            variant="outline-secondary"
             className="place-nav-btn next-place"
             onClick={() => nextLocation && navigate(`/location/${nextLocation.id}`)}
             disabled={!nextLocation}
           >
             <span className="nav-place-name">{nextLocation ? nextLocation.name : 'No next'}</span>
             <span className="nav-arrow">→</span>
-          </button>
+          </Button>
         </nav>
 
         {/* Comments */}
@@ -180,7 +185,7 @@ function DetailPage() {
               maxLength={500}
             />
             {commentError && <p className="comment-error">{commentError}</p>}
-            <button type="submit" className="submit-comment-btn">Post Comment</button>
+            <Button type="submit" variant="danger" className="submit-comment-btn">Post Comment</Button>
           </form>
 
           {/* Comment list */}

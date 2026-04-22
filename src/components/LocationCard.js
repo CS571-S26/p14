@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card, Button, Badge } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import './LocationCard.css';
@@ -10,59 +11,60 @@ function LocationCard({ location }) {
   const isSaved = !!saved[location.id];
   const likeCount = location.baseLikes + (isLiked ? 1 : 0);
 
-  const handleCardClick = () => navigate(`/location/${location.id}`);
-
-  const stopAndRun = (fn) => (e) => {
-    e.stopPropagation();
-    fn();
-  };
+  const goToDetail = () => navigate(`/location/${location.id}`);
 
   return (
-    <div className="location-card" onClick={handleCardClick}>
+    <Card className="location-card h-100" onClick={goToDetail} style={{ cursor: 'pointer' }}>
       <div className="card-image">
-        <img src={location.images[0]} alt={location.name} loading="lazy" />
-        <div className="card-category">{location.category}</div>
+        <Card.Img variant="top" src={location.images[0]} alt={location.name} loading="lazy" />
+        <Badge className="card-category" bg="danger">{location.category}</Badge>
       </div>
 
-      <div className="card-body">
-        <div className="card-title-row">
-          <h3 className="card-name">{location.name}</h3>
+      <Card.Body className="d-flex flex-column">
+        <div className="card-title-row mb-1">
+          <Card.Title as="h3" className="card-name mb-0">{location.name}</Card.Title>
           <span className="card-chinese">{location.chineseName}</span>
         </div>
         <p className="card-location">
           <span className="pin-icon">📍</span>
           {location.location}
         </p>
-        <p className="card-intro">
+        <Card.Text className="card-intro flex-grow-1">
           {location.introduction.substring(0, 118)}…
-        </p>
+        </Card.Text>
 
-        <div className="card-actions" onClick={e => e.stopPropagation()}>
-          <button
-            className={`card-btn like-btn ${isLiked ? 'liked' : ''}`}
-            onClick={stopAndRun(() => toggleLike(location.id))}
+        <div className="card-actions mt-auto" onClick={(e) => e.stopPropagation()}>
+          <Button
+            variant={isLiked ? 'danger' : 'outline-secondary'}
+            size="sm"
+            className="card-btn"
+            onClick={() => toggleLike(location.id)}
             title={isLiked ? 'Unlike' : 'Like'}
           >
             {isLiked ? '❤️' : '🤍'} {likeCount.toLocaleString()}
-          </button>
+          </Button>
 
-          <button
-            className={`card-btn save-btn ${isSaved ? 'saved' : ''}`}
-            onClick={stopAndRun(() => toggleSave(location.id))}
+          <Button
+            variant={isSaved ? 'warning' : 'outline-secondary'}
+            size="sm"
+            className="card-btn"
+            onClick={() => toggleSave(location.id)}
             title={isSaved ? 'Unsave' : 'Save'}
           >
             {isSaved ? '🔖 Saved' : '📌 Save'}
-          </button>
+          </Button>
 
-          <button
+          <Button
+            variant="outline-danger"
+            size="sm"
             className="card-btn explore-btn"
-            onClick={stopAndRun(handleCardClick)}
+            onClick={goToDetail}
           >
             Explore →
-          </button>
+          </Button>
         </div>
-      </div>
-    </div>
+      </Card.Body>
+    </Card>
   );
 }
 

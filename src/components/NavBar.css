@@ -1,9 +1,15 @@
-.navbar {
-  background: linear-gradient(135deg, #8B0000 0%, #B71C1C 60%, #C62828 100%);
+/* React Bootstrap Navbar override */
+.app-navbar {
+  background: linear-gradient(135deg, #8B0000 0%, #B71C1C 60%, #C62828 100%) !important;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.25);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+}
+
+.app-navbar .navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.app-navbar .navbar-toggler-icon {
+  filter: invert(1);
 }
 
 .navbar-container {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 import LocationCard from '../components/LocationCard';
 import locations from '../data/locations';
 import './HomePage.css';
@@ -38,17 +39,21 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Cards */}
+      {/* Cards grid using React Bootstrap layout */}
       <section className="destinations-section">
-        <div className="section-header">
-          <h2>Featured Destinations</h2>
-          <p>Handpicked wonders waiting for your visit</p>
-        </div>
-        <div className="cards-grid">
-          {locations.map(location => (
-            <LocationCard key={location.id} location={location} />
-          ))}
-        </div>
+        <Container>
+          <div className="section-header">
+            <h2>Featured Destinations</h2>
+            <p>Handpicked wonders waiting for your visit</p>
+          </div>
+          <Row xs={1} sm={2} lg={4} className="g-4">
+            {locations.map(location => (
+              <Col key={location.id}>
+                <LocationCard location={location} />
+              </Col>
+            ))}
+          </Row>
+        </Container>
       </section>
     </div>
   );
