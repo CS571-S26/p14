@@ -1,104 +1,108 @@
-/* React Bootstrap Navbar override */
+/* ── Navbar shell ─────────────────────────────────────────── */
 .app-navbar {
   background: linear-gradient(135deg, #8B0000 0%, #B71C1C 60%, #C62828 100%) !important;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+  padding: 0.55rem 0;
 }
 
-.app-navbar .navbar-toggler {
-  border-color: rgba(255, 255, 255, 0.4);
-}
-
-.app-navbar .navbar-toggler-icon {
-  filter: invert(1);
-}
-
-.navbar-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.navbar-logo {
+/* ── Brand / logo ─────────────────────────────────────────── */
+.app-navbar-brand {
   display: flex;
   align-items: center;
   gap: 10px;
-  text-decoration: none;
-  color: white;
+  text-decoration: none !important;
+  color: white !important;
+}
+
+.app-navbar-brand:hover {
+  color: white !important;
+  opacity: 0.92;
 }
 
 .logo-icon {
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   line-height: 1;
+  flex-shrink: 0;
 }
 
 .logo-text-group {
   display: flex;
   flex-direction: column;
-  line-height: 1.2;
+  line-height: 1.25;
 }
 
 .logo-text {
   font-size: 1.15rem;
   font-weight: 700;
-  letter-spacing: 0.3px;
+  color: #ffffff;
+  letter-spacing: 0.2px;
 }
 
 .logo-tagline {
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.62);
   font-weight: 400;
   letter-spacing: 0.3px;
 }
 
-.navbar-links {
-  display: flex;
-  gap: 4px;
-  align-items: center;
+/* ── Nav links ────────────────────────────────────────────── */
+.app-nav-link {
+  color: rgba(255, 255, 255, 0.82) !important;
+  padding: 7px 15px !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  font-size: 0.92rem !important;
+  transition: background 0.18s ease, color 0.18s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
 }
 
-.nav-link {
-  color: rgba(255, 255, 255, 0.85);
-  text-decoration: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: 0.95rem;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.app-nav-link:hover {
+  background: rgba(255, 255, 255, 0.14) !important;
+  color: #ffffff !important;
 }
 
-.nav-link:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
+.app-nav-link--active {
+  background: rgba(255, 255, 255, 0.22) !important;
+  color: #ffffff !important;
 }
 
-.nav-link.active {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-}
-
+/* ── Saved count badge ────────────────────────────────────── */
 .nav-badge {
   background: #FFD54F;
-  color: #7B1FA2;
-  font-size: 0.7rem;
+  color: #6A1A1A;
+  font-size: 0.68rem;
   font-weight: 700;
   padding: 2px 7px;
   border-radius: 10px;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
-@media (max-width: 600px) {
+/* ── Hamburger toggle ─────────────────────────────────────── */
+.app-navbar-toggle {
+  border-color: rgba(255, 255, 255, 0.35) !important;
+}
+
+.app-navbar-toggle .navbar-toggler-icon {
+  filter: invert(1);
+}
+
+/* ── Mobile collapsed menu ────────────────────────────────── */
+@media (max-width: 767px) {
+  .app-navbar .navbar-collapse {
+    background: rgba(90, 0, 0, 0.97);
+    border-radius: 0 0 10px 10px;
+    padding: 0.4rem 0.5rem 0.8rem;
+    margin-top: 0.4rem;
+  }
+
+  .app-nav-link {
+    border-radius: 6px !important;
+    padding: 8px 14px !important;
+  }
+
   .logo-text {
     font-size: 1rem;
-  }
-  .nav-link {
-    padding: 7px 10px;
-    font-size: 0.85rem;
   }
 }
