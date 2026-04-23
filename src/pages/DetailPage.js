@@ -54,6 +54,7 @@ function DetailPage() {
       return;
     }
     addComment(location.id, authorName.trim(), commentText.trim());
+    setAuthorName('');
     setCommentText('');
     setCommentError('');
   };
