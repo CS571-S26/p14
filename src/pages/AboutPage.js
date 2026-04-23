@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Form, Button, Alert, Card } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Alert, Card, Spinner } from 'react-bootstrap';
+import emailjs from '@emailjs/browser';
 import PageHero from '../components/PageHero';
 import './AboutPage.css';
+
+const EMAILJS_SERVICE_ID  = 'service_ho3q1ml';
+const EMAILJS_TEMPLATE_ID = 'template_bpaq6s7';
+const EMAILJS_PUBLIC_KEY  = 'QpBRF02lSmthkl-3p';
 
 const values = [
   {
@@ -29,6 +34,7 @@ const values = [
 function AboutPage() {
   const [form, setForm] = useState({ name: '', email: '', type: 'suggest', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
 
   const handleChange = (e) =>
@@ -36,6 +42,7 @@ function AboutPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
       setError('Please fill in all fields.');
       return;
@@ -44,13 +51,35 @@ function AboutPage() {
       setError('Please enter a valid email address.');
       return;
     }
+
     setError('');
-    setSubmitted(true);
+    setSending(true);
+
+    emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      {
+        from_name:    form.name,
+        from_email:   form.email,
+        message_type: form.type,
+        message:      form.message,
+      },
+      EMAILJS_PUBLIC_KEY
+    )
+    .then(() => {
+      setSending(false);
+      setSubmitted(true);
+    })
+    .catch(() => {
+      setSending(false);
+      setError('Something went wrong. Please try again.');
+    });
   };
 
   const resetForm = () => {
     setForm({ name: '', email: '', type: 'suggest', message: '' });
     setSubmitted(false);
+    setError('');
   };
 
   return (
@@ -149,7 +178,7 @@ function AboutPage() {
               <Alert variant="success" className="success-card text-center py-5">
                 <div className="success-icon">✅</div>
                 <Alert.Heading>Thank you, {form.name}!</Alert.Heading>
-                <p>We've received your message and will follow up at <strong>{form.email}</strong>.</p>
+                <p>Your message has been sent. We'll follow up at <strong>{form.email}</strong>.</p>
                 <Button variant="outline-success" onClick={resetForm}>Send Another Message</Button>
               </Alert>
             ) : (
@@ -164,6 +193,7 @@ function AboutPage() {
                         value={form.name}
                         onChange={handleChange}
                         placeholder="Enter your name"
+                        disabled={sending}
                       />
                     </Form.Group>
                   </Col>
@@ -176,13 +206,14 @@ function AboutPage() {
                         value={form.email}
                         onChange={handleChange}
                         placeholder="you@example.com"
+                        disabled={sending}
                       />
                     </Form.Group>
                   </Col>
                 </Row>
                 <Form.Group className="mb-3">
                   <Form.Label>Message Type</Form.Label>
-                  <Form.Select name="type" value={form.type} onChange={handleChange}>
+                  <Form.Select name="type" value={form.type} onChange={handleChange} disabled={sending}>
                     <option value="suggest">Suggest a Destination</option>
                     <option value="question">Ask a Question</option>
                     <option value="feedback">General Feedback</option>
@@ -198,11 +229,19 @@ function AboutPage() {
                     onChange={handleChange}
                     placeholder="Tell us about a place you'd love to see featured, ask us anything, or share your thoughts…"
                     rows={6}
+                    disabled={sending}
                   />
                 </Form.Group>
                 {error && <Alert variant="danger" className="py-2">{error}</Alert>}
-                <Button type="submit" variant="danger" className="submit-btn">
-                  Send Message
+                <Button type="submit" variant="danger" className="submit-btn" disabled={sending}>
+                  {sending ? (
+                    <>
+                      <Spinner as="span" animation="border" size="sm" className="me-2" />
+                      Sending…
+                    </>
+                  ) : (
+                    'Send Message'
+                  )}
                 </Button>
               </Form>
             )}
