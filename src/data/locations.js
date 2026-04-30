@@ -1,6 +1,9 @@
 // Image convention: drop your photos into public/images/<folder-name>/
 // and name them 1.jpg, 2.jpg, 3.jpg, 4.jpg (add more as needed).
 // process.env.PUBLIC_URL resolves to "" in dev and "/p14" on GitHub Pages automatically.
+// Image convention: drop your photos into public/images/<folder-name>/
+// and name them 1.jpg, 2.jpg, 3.jpg, 4.jpg (add more as needed).
+// process.env.PUBLIC_URL resolves to "" in dev and "/p14" on GitHub Pages automatically.
 const img = (folder, n) => `${process.env.PUBLIC_URL}/images/${folder}/${n}.jpg`;
 
 const locations = [
@@ -20,8 +23,6 @@ const locations = [
       "Construction spanned more than 2,000 years",
       "Best sections: Mutianyu, Badaling, Jinshanling",
     ],
-    baseLikes: 2847,
-    // → place images in: public/images/great-wall/1.jpg … 4.jpg
     images: [
       img("great-wall", 1),
       img("great-wall", 2),
@@ -45,8 +46,6 @@ const locations = [
       "UNESCO World Heritage Site",
       "Home to 1.8 million priceless artifacts",
     ],
-    baseLikes: 3241,
-    // → place images in: public/images/forbidden-city/1.jpg … 4.jpg
     images: [
       img("forbidden-city", 1),
       img("forbidden-city", 2),
@@ -70,8 +69,6 @@ const locations = [
       "Glass walkway on Tianmen Mountain",
       "Over 3,000 towering sandstone pillars",
     ],
-    baseLikes: 4123,
-    // → place images in: public/images/zhangjiajie/1.jpg … 4.jpg
     images: [
       img("zhangjiajie", 1),
       img("zhangjiajie", 2),
@@ -95,8 +92,6 @@ const locations = [
       "Famous Ten Scenes of West Lake",
       "Historic Su and Bai Causeways",
     ],
-    baseLikes: 1987,
-    // → place images in: public/images/west-lake/1.jpg … 4.jpg
     images: [
       img("west-lake", 1),
       img("west-lake", 2),
@@ -120,8 +115,6 @@ const locations = [
       "Traditional cormorant fishing villages",
       "Ancient karst limestone formations",
     ],
-    baseLikes: 3567,
-    // → place images in: public/images/li-river/1.jpg … 4.jpg
     images: [
       img("li-river", 1),
       img("li-river", 2),
@@ -145,8 +138,6 @@ const locations = [
       "Breathtaking sea of clouds at sunrise",
       "Ancient pine trees over 1,000 years old",
     ],
-    baseLikes: 2654,
-    // → place images in: public/images/yellow-mountain/1.jpg … 4.jpg
     images: [
       img("yellow-mountain", 1),
       img("yellow-mountain", 2),
@@ -170,8 +161,6 @@ const locations = [
       "Habitat for rare giant pandas",
       "Spectacular autumn foliage display",
     ],
-    baseLikes: 4891,
-    // → place images in: public/images/jiuzhaigou/1.jpg … 4.jpg
     images: [
       img("jiuzhaigou", 1),
       img("jiuzhaigou", 2),
@@ -195,8 +184,6 @@ const locations = [
       "Nightly light show on both riverbanks",
       "Heart of modern Shanghai's history",
     ],
-    baseLikes: 3102,
-    // → place images in: public/images/the-bund/1.jpg … 4.jpg
     images: [
       img("the-bund", 1),
       img("the-bund", 2),
@@ -220,8 +207,6 @@ const locations = [
       "13 stories with 1,000 rooms",
       "Former winter palace of the Dalai Lamas",
     ],
-    baseLikes: 3789,
-    // → place images in: public/images/potala-palace/1.jpg … 4.jpg
     images: [
       img("potala-palace", 1),
       img("potala-palace", 2),

@@ -9,7 +9,17 @@ import './DetailPage.css';
 function DetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { liked, saved, comments, toggleLike, toggleSave, addComment, deleteComment, isMyComment } = useApp();
+  const { 
+    getLikeCount, 
+    isLiked, 
+    toggleLike, 
+    saved, 
+    toggleSave, 
+    comments, 
+    addComment, 
+    deleteComment,
+    canDeleteComment 
+  } = useApp();
 
   const currentIndex = locations.findIndex(l => l.id === parseInt(id));
   const location = locations[currentIndex];
@@ -18,7 +28,11 @@ function DetailPage() {
   const [commentText, setCommentText] = useState('');
   const [commentError, setCommentError] = useState('');
 
-  // Scroll to top and reset form on location change
+  const likeCount = getLikeCount(location?.id);
+  const liked = isLiked(location?.id);
+  const isSaved = saved[location?.id];
+  const locationComments = comments[location?.id] || [];
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setAuthorName('');
@@ -34,11 +48,6 @@ function DetailPage() {
       </Container>
     );
   }
-
-  const isLiked = !!liked[location.id];
-  const isSaved = !!saved[location.id];
-  const likeCount = location.baseLikes + (isLiked ? 1 : 0);
-  const locationComments = comments[location.id] || [];
 
   const prevLocation = currentIndex > 0 ? locations[currentIndex - 1] : null;
   const nextLocation = currentIndex < locations.length - 1 ? locations[currentIndex + 1] : null;
@@ -59,6 +68,12 @@ function DetailPage() {
     setCommentError('');
   };
 
+  const handleDeleteComment = (commentId) => {
+    if (window.confirm('Are you sure you want to delete this comment?')) {
+      deleteComment(location.id, commentId);
+    }
+  };
+
   const formatDate = (iso) =>
     new Date(iso).toLocaleDateString('en-US', {
       year: 'numeric', month: 'short', day: 'numeric',
@@ -69,7 +84,6 @@ function DetailPage() {
     <div className="detail-page">
       <div className="detail-container">
 
-        {/* Header */}
         <div className="detail-header">
           <div className="detail-title-row">
             <h1 className="detail-name">{location.name}</h1>
@@ -81,10 +95,8 @@ function DetailPage() {
           </div>
         </div>
 
-        {/* Carousel */}
         <ImageCarousel images={location.images} key={location.id} />
 
-        {/* Main content + sidebar */}
         <div className="detail-body">
           <div className="detail-main">
             <blockquote className="detail-tagline">"{location.tagline}"</blockquote>
@@ -112,12 +124,12 @@ function DetailPage() {
 
             <div className="sidebar-actions">
               <Button
-                variant={isLiked ? 'danger' : 'outline-danger'}
+                variant={liked ? 'danger' : 'outline-danger'}
                 className="sidebar-btn like-btn w-100"
                 onClick={() => toggleLike(location.id)}
               >
-                <span className="btn-emoji">{isLiked ? '❤️' : '🤍'}</span>
-                <span className="btn-label">{isLiked ? 'Liked' : 'Like'}</span>
+                <span className="btn-emoji">{liked ? '❤️' : '🤍'}</span>
+                <span className="btn-label">{liked ? 'Liked' : 'Like'}</span>
                 <span className="like-pill">{likeCount.toLocaleString()}</span>
               </Button>
 
@@ -133,7 +145,6 @@ function DetailPage() {
           </aside>
         </div>
 
-        {/* Navigation */}
         <nav className="place-navigation">
           <Button
             variant="outline-secondary"
@@ -160,14 +171,12 @@ function DetailPage() {
           </Button>
         </nav>
 
-        {/* Comments */}
         <section className="comments-section">
           <h2 className="comments-title">
             Community Comments
             <span className="comment-count-badge">{locationComments.length}</span>
           </h2>
 
-          {/* Comment form */}
           <form className="comment-form" onSubmit={handleSubmitComment}>
             <input
               type="text"
@@ -189,36 +198,38 @@ function DetailPage() {
             <Button type="submit" variant="danger" className="submit-comment-btn">Post Comment</Button>
           </form>
 
-          {/* Comment list */}
           <div className="comments-list">
             {locationComments.length === 0 ? (
               <div className="no-comments">
                 <p>Be the first to leave a comment about {location.name}!</p>
               </div>
             ) : (
-              [...locationComments].reverse().map(comment => (
-                <div key={comment.id} className="comment-card">
-                  <div className="comment-header">
-                    <div className="comment-avatar">
-                      {comment.author.charAt(0).toUpperCase()}
+              [...locationComments].reverse().map(comment => {
+                const isMyComment = authorName && comment.author === authorName.trim();
+                return (
+                  <div key={comment.id} className="comment-card">
+                    <div className="comment-header">
+                      <div className="comment-avatar">
+                        {comment.author.charAt(0).toUpperCase()}
+                      </div>
+                      <div className="comment-meta">
+                        <span className="comment-author">{comment.author}</span>
+                        <span className="comment-time">{formatDate(comment.timestamp)}</span>
+                      </div>
+                      {isMyComment && (
+                        <button
+                          className="delete-btn"
+                          onClick={() => handleDeleteComment(comment.id)}
+                          title="Delete your comment"
+                        >
+                          🗑️
+                        </button>
+                      )}
                     </div>
-                    <div className="comment-meta">
-                      <span className="comment-author">{comment.author}</span>
-                      <span className="comment-time">{formatDate(comment.timestamp)}</span>
-                    </div>
-                    {isMyComment(comment.id) && (
-                      <button
-                        className="delete-btn"
-                        onClick={() => deleteComment(location.id, comment.id)}
-                        title="Delete your comment"
-                      >
-                        🗑️
-                      </button>
-                    )}
+                    <p className="comment-text">{comment.text}</p>
                   </div>
-                  <p className="comment-text">{comment.text}</p>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
         </section>

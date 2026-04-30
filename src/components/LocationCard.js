@@ -6,10 +6,11 @@ import './LocationCard.css';
 
 function LocationCard({ location }) {
   const navigate = useNavigate();
-  const { liked, saved, toggleLike, toggleSave } = useApp();
-  const isLiked = !!liked[location.id];
+  const { getLikeCount, isLiked, toggleLike, saved, toggleSave } = useApp();
+  
+  const likeCount = getLikeCount(location.id);
+  const liked = isLiked(location.id);
   const isSaved = !!saved[location.id];
-  const likeCount = location.baseLikes + (isLiked ? 1 : 0);
 
   const goToDetail = () => navigate(`/location/${location.id}`);
 
@@ -35,19 +36,19 @@ function LocationCard({ location }) {
 
         <div className="card-actions mt-auto" onClick={(e) => e.stopPropagation()}>
           <Button
-            variant={isLiked ? 'danger' : 'outline-secondary'}
+            variant={liked ? 'danger' : 'outline-secondary'}
             size="sm"
-            className="card-btn"
+            className="card-btn like-btn"
             onClick={() => toggleLike(location.id)}
-            title={isLiked ? 'Unlike' : 'Like'}
+            title={liked ? 'Unlike' : 'Like'}
           >
-            {isLiked ? '❤️' : '🤍'} {likeCount.toLocaleString()}
+            {liked ? '❤️' : '🤍'} {likeCount.toLocaleString()}
           </Button>
 
           <Button
             variant={isSaved ? 'warning' : 'outline-secondary'}
             size="sm"
-            className="card-btn"
+            className="card-btn save-btn"
             onClick={() => toggleSave(location.id)}
             title={isSaved ? 'Unsave' : 'Save'}
           >
