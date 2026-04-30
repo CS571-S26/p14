@@ -186,7 +186,9 @@ function DetailPage() {
                 : <span className="username-label">Generating your username…</span>
               }
             </div>
+            <label htmlFor="comment-text" className="visually-hidden">Your comment</label>
             <textarea
+              id="comment-text"
               placeholder={`Share your thoughts about ${location.name}…`}
               value={commentText}
               onChange={e => setCommentText(e.target.value)}

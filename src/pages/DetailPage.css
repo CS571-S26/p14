@@ -9,7 +9,6 @@
   margin: 0 auto;
 }
 
-/* Header */
 .detail-header {
   margin-bottom: 26px;
 }
@@ -59,7 +58,6 @@
   font-size: 0.9rem;
 }
 
-/* Body layout */
 .detail-body {
   display: grid;
   grid-template-columns: 1fr 270px;
@@ -122,7 +120,6 @@
   flex-shrink: 0;
 }
 
-/* Sidebar */
 .sidebar-location-card {
   background: white;
   border-radius: 14px;
@@ -215,7 +212,6 @@
   border-color: #E65100;
 }
 
-/* Navigation between places */
 .place-navigation {
   display: flex;
   gap: 12px;
@@ -284,7 +280,6 @@
   max-width: 160px;
 }
 
-/* Comments */
 .comments-section {
   margin-top: 56px;
   padding-top: 40px;
@@ -309,7 +304,6 @@
   border-radius: 12px;
 }
 
-/* Comment form */
 .comment-form {
   background: white;
   border-radius: 16px;
@@ -322,23 +316,20 @@
 }
 
 .username-display {
-  background: #FFF9F5;
-  border: 2px solid #FFCDD2;
+  background: #f8f8f8;
+  padding: 8px 14px;
   border-radius: 10px;
-  padding: 10px 16px;
-  font-size: 0.9rem;
-  color: #555;
+  font-size: 0.85rem;
 }
 
 .username-label {
-  color: #999;
+  color: #666;
 }
 
 .username-value {
-  font-weight: 700;
+  font-weight: 600;
   color: #B71C1C;
-  margin-left: 4px;
-  text-transform: capitalize;
+  margin-left: 6px;
 }
 
 .comment-textarea {
@@ -351,14 +342,11 @@
   transition: border-color 0.2s;
   font-family: inherit;
   box-sizing: border-box;
+  resize: vertical;
 }
 
 .comment-textarea:focus {
   border-color: #B71C1C;
-}
-
-.comment-textarea {
-  resize: vertical;
 }
 
 .comment-error {
@@ -384,7 +372,11 @@
   background: #8B0000;
 }
 
-/* Comment list */
+.submit-comment-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .comments-list {
   display: flex;
   flex-direction: column;
@@ -471,7 +463,6 @@
   word-break: break-word;
 }
 
-/* Not found */
 .not-found {
   text-align: center;
   padding: 100px 24px;
@@ -483,14 +474,15 @@
   color: #1a1a2e;
 }
 
-.home-link-btn {
-  background: #B71C1C;
-  color: white;
-  padding: 12px 28px;
-  border: none;
-  border-radius: 10px;
-  font-size: 1rem;
-  cursor: pointer;
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
 
 @media (max-width: 768px) {

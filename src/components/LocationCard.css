@@ -14,7 +14,6 @@
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.14);
 }
 
-/* Image */
 .card-image {
   position: relative;
   height: 220px;
@@ -49,7 +48,6 @@
   backdrop-filter: blur(4px);
 }
 
-/* Body */
 .card-body {
   padding: 20px;
   display: flex;
@@ -74,8 +72,8 @@
 
 .card-chinese {
   font-size: 1rem;
-  color: #C62828;
-  font-weight: 500;
+  color: #8B0000;
+  font-weight: 600;
 }
 
 .card-location {
@@ -99,7 +97,6 @@
   flex: 1;
 }
 
-/* Actions */
 .card-actions {
   display: flex;
   gap: 8px;
