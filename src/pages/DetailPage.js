@@ -3,39 +3,32 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Button, Badge } from 'react-bootstrap';
 import ImageCarousel from '../components/ImageCarousel';
 import { useApp } from '../context/AppContext';
+import { useComments } from '../hooks/useComments';
+import { getOrCreateUsername } from '../utils/username';
 import locations from '../data/locations';
 import './DetailPage.css';
 
 function DetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { 
-    getLikeCount, 
-    isLiked, 
-    toggleLike, 
-    saved, 
-    toggleSave, 
-    comments, 
-    addComment, 
-    deleteComment,
-    canDeleteComment 
-  } = useApp();
+  const { getLikeCount, isLiked, toggleLike, saved, toggleSave } = useApp();
 
   const currentIndex = locations.findIndex(l => l.id === parseInt(id));
   const location = locations[currentIndex];
 
-  const [authorName, setAuthorName] = useState('');
+  const { comments, loading: commentsLoading, error: commentsError, addComment, deleteComment } = useComments(location?.id);
+
+  const [username, setUsername] = useState(null);
   const [commentText, setCommentText] = useState('');
   const [commentError, setCommentError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
-  const likeCount = getLikeCount(location?.id);
-  const liked = isLiked(location?.id);
-  const isSaved = saved[location?.id];
-  const locationComments = comments[location?.id] || [];
+  useEffect(() => {
+    getOrCreateUsername().then(setUsername);
+  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    setAuthorName('');
     setCommentText('');
     setCommentError('');
   }, [id]);
@@ -49,36 +42,45 @@ function DetailPage() {
     );
   }
 
+  const likeCount = getLikeCount(location.id);
+  const liked = isLiked(location.id);
+  const isSaved = saved[location.id];
   const prevLocation = currentIndex > 0 ? locations[currentIndex - 1] : null;
   const nextLocation = currentIndex < locations.length - 1 ? locations[currentIndex + 1] : null;
 
-  const handleSubmitComment = (e) => {
+  const handleSubmitComment = async (e) => {
     e.preventDefault();
-    if (!authorName.trim()) {
-      setCommentError('Please enter your name.');
-      return;
-    }
     if (!commentText.trim()) {
       setCommentError('Please enter a comment.');
       return;
     }
-    addComment(location.id, authorName.trim(), commentText.trim());
-    setAuthorName('');
-    setCommentText('');
-    setCommentError('');
-  };
-
-  const handleDeleteComment = (commentId) => {
-    if (window.confirm('Are you sure you want to delete this comment?')) {
-      deleteComment(location.id, commentId);
+    if (!username) return;
+    setSubmitting(true);
+    try {
+      await addComment(username, commentText.trim());
+      setCommentText('');
+      setCommentError('');
+    } catch {
+      setCommentError('Failed to post comment. Please try again.');
+    } finally {
+      setSubmitting(false);
     }
   };
 
-  const formatDate = (iso) =>
-    new Date(iso).toLocaleDateString('en-US', {
+  const handleDeleteComment = async (commentId) => {
+    if (window.confirm('Delete your comment?')) {
+      await deleteComment(commentId);
+    }
+  };
+
+  const formatDate = (timestamp) => {
+    if (!timestamp) return 'just now';
+    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+    return date.toLocaleDateString('en-US', {
       year: 'numeric', month: 'short', day: 'numeric',
       hour: '2-digit', minute: '2-digit',
     });
+  };
 
   return (
     <div className="detail-page">
@@ -174,18 +176,16 @@ function DetailPage() {
         <section className="comments-section">
           <h2 className="comments-title">
             Community Comments
-            <span className="comment-count-badge">{locationComments.length}</span>
+            <span className="comment-count-badge">{comments.length}</span>
           </h2>
 
           <form className="comment-form" onSubmit={handleSubmitComment}>
-            <input
-              type="text"
-              placeholder="Your name"
-              value={authorName}
-              onChange={e => setAuthorName(e.target.value)}
-              className="comment-input"
-              maxLength={50}
-            />
+            <div className="username-display">
+              {username
+                ? <><span className="username-label">Posting as</span> <span className="username-value">{username}</span></>
+                : <span className="username-label">Generating your username…</span>
+              }
+            </div>
             <textarea
               placeholder={`Share your thoughts about ${location.name}…`}
               value={commentText}
@@ -195,42 +195,48 @@ function DetailPage() {
               maxLength={500}
             />
             {commentError && <p className="comment-error">{commentError}</p>}
-            <Button type="submit" variant="danger" className="submit-comment-btn">Post Comment</Button>
+            <Button
+              type="submit"
+              variant="danger"
+              className="submit-comment-btn"
+              disabled={submitting || !username}
+            >
+              {submitting ? 'Posting…' : 'Post Comment'}
+            </Button>
           </form>
 
           <div className="comments-list">
-            {locationComments.length === 0 ? (
+            {commentsError && (
+              <div className="no-comments"><p>{commentsError}</p></div>
+            )}
+            {!commentsError && !commentsLoading && comments.length === 0 && (
               <div className="no-comments">
                 <p>Be the first to leave a comment about {location.name}!</p>
               </div>
-            ) : (
-              [...locationComments].reverse().map(comment => {
-                const isMyComment = authorName && comment.author === authorName.trim();
-                return (
-                  <div key={comment.id} className="comment-card">
-                    <div className="comment-header">
-                      <div className="comment-avatar">
-                        {comment.author.charAt(0).toUpperCase()}
-                      </div>
-                      <div className="comment-meta">
-                        <span className="comment-author">{comment.author}</span>
-                        <span className="comment-time">{formatDate(comment.timestamp)}</span>
-                      </div>
-                      {isMyComment && (
-                        <button
-                          className="delete-btn"
-                          onClick={() => handleDeleteComment(comment.id)}
-                          title="Delete your comment"
-                        >
-                          🗑️
-                        </button>
-                      )}
-                    </div>
-                    <p className="comment-text">{comment.text}</p>
-                  </div>
-                );
-              })
             )}
+            {!commentsError && comments.map(comment => (
+              <div key={comment.id} className="comment-card">
+                <div className="comment-header">
+                  <div className="comment-avatar">
+                    {comment.username.charAt(0).toUpperCase()}
+                  </div>
+                  <div className="comment-meta">
+                    <span className="comment-author">{comment.username}</span>
+                    <span className="comment-time">{formatDate(comment.timestamp)}</span>
+                  </div>
+                  {comment.isOwner && (
+                    <button
+                      className="delete-btn"
+                      onClick={() => handleDeleteComment(comment.id)}
+                      title="Delete your comment"
+                    >
+                      🗑️
+                    </button>
+                  )}
+                </div>
+                <p className="comment-text">{comment.text}</p>
+              </div>
+            ))}
           </div>
         </section>
 

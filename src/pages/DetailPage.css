@@ -321,7 +321,26 @@
   gap: 12px;
 }
 
-.comment-input,
+.username-display {
+  background: #FFF9F5;
+  border: 2px solid #FFCDD2;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.username-label {
+  color: #999;
+}
+
+.username-value {
+  font-weight: 700;
+  color: #B71C1C;
+  margin-left: 4px;
+  text-transform: capitalize;
+}
+
 .comment-textarea {
   width: 100%;
   padding: 12px 16px;
@@ -334,7 +353,6 @@
   box-sizing: border-box;
 }
 
-.comment-input:focus,
 .comment-textarea:focus {
   border-color: #B71C1C;
 }

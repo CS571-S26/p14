@@ -26,8 +26,6 @@ export function AppProvider({ children }) {
 
   const [saved, setSaved] = useState(() => load('ct-saved', {}));
 
-  const [comments, setComments] = useState(() => load('ct-comments', {}));
-
   useEffect(() => {
     localStorage.setItem('ct-like-counts', JSON.stringify(likeCounts));
   }, [likeCounts]);
@@ -40,13 +38,8 @@ export function AppProvider({ children }) {
     localStorage.setItem('ct-saved', JSON.stringify(saved));
   }, [saved]);
 
-  useEffect(() => {
-    localStorage.setItem('ct-comments', JSON.stringify(comments));
-  }, [comments]);
-
   const toggleLike = (id) => {
     const hasLiked = !!userLiked[id];
-    
     if (hasLiked) {
       setLikeCounts(prev => ({ ...prev, [id]: Math.max(0, (prev[id] || 0) - 1) }));
       setUserLiked(prev => ({ ...prev, [id]: false }));
@@ -56,57 +49,17 @@ export function AppProvider({ children }) {
     }
   };
 
-
-  const getLikeCount = (id) => {
-    return likeCounts[id] || 0;
-  };
-
-  const isLiked = (id) => {
-    return !!userLiked[id];
-  };
-
-  const toggleSave = (id) => {
-    setSaved(prev => ({ ...prev, [id]: !prev[id] }));
-  };
-
-  const addComment = (locationId, author, text) => {
-    const comment = {
-      id: Date.now().toString() + Math.random().toString(36).substr(2, 6),
-      author: author.trim(),
-      text: text.trim(),
-      timestamp: new Date().toISOString(),
-    };
-    setComments(prev => ({
-      ...prev,
-      [locationId]: [...(prev[locationId] || []), comment],
-    }));
-  };
-
-  const deleteComment = (locationId, commentId, authorName) => {
-    setComments(prev => {
-      const locationComments = prev[locationId] || [];
-      const updatedComments = locationComments.filter(c => c.id !== commentId);
-      return { ...prev, [locationId]: updatedComments };
-    });
-  };
-
-  const canDeleteComment = (comment, currentAuthor) => {
-    return comment.author === currentAuthor;
-  };
+  const getLikeCount = (id) => likeCounts[id] || 0;
+  const isLiked = (id) => !!userLiked[id];
+  const toggleSave = (id) => setSaved(prev => ({ ...prev, [id]: !prev[id] }));
 
   return (
     <AppContext.Provider value={{
-      likeCounts,
-      userLiked,
       saved,
-      comments,
       getLikeCount,
       isLiked,
       toggleLike,
       toggleSave,
-      addComment,
-      deleteComment,
-      canDeleteComment,
     }}>
       {children}
     </AppContext.Provider>
